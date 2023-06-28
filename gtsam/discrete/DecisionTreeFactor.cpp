@@ -182,6 +182,15 @@ namespace gtsam {
   }
 
   /* ************************************************************************ */
+  std::vector<double> DecisionTreeFactor::probabilities() const {
+    std::vector<double> probs;
+    for (auto&& [key, value] : enumerate()) {
+      probs.push_back(value);
+    }
+    return probs;
+  }
+
+  /* ************************************************************************ */
   DiscreteKeys DecisionTreeFactor::discreteKeys() const {
     DiscreteKeys result;
     for (auto&& key : keys()) {
@@ -307,9 +316,7 @@ namespace gtsam {
     // Get the probabilities in the decision tree so we can threshold.
     std::vector<double> probabilities;
     // NOTE(Varun) this is potentially slow due to the cartesian product
-    auto allValues = DiscreteValues::CartesianProduct(this->discreteKeys());
-    for (auto&& val : allValues) {
-      double prob = (*this)(val);
+    for (auto&& [assignment, prob] : this->enumerate()) {
       probabilities.push_back(prob);
     }
 
