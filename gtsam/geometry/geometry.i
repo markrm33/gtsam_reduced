@@ -549,6 +549,9 @@ class Pose3 {
   double range(const gtsam::Pose3& pose);
   double range(const gtsam::Pose3& pose, Eigen::Ref<Eigen::MatrixXd> Hself,
                Eigen::Ref<Eigen::MatrixXd> Hpose);
+  gtsam::Unit3 bearing(const gtsam::Point3& point, Eigen::Ref<Eigen::MatrixXd> Hself,
+               Eigen::Ref<Eigen::MatrixXd> Hpoint);
+
 
   // enabling serialization functionality
   void serialize() const;
